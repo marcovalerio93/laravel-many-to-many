@@ -52,6 +52,40 @@
             @enderror 
         </div>
 
+        <h3>Tag:</h3>
+
+        <div class="card p-3">
+            @foreach ($tags as $tag)
+                <div class="form-group form-check">
+
+                    @if ($errors->any())
+                        <input {{ (in_array($tag->id,old('tags',[])))?'checked':''}} 
+                            name="tags[]" 
+                            type="checkbox" 
+                            class="form-check-input" 
+                            id="tag_{{ $tag->id }}" value="{{ $tag->id }}"
+                        >
+                    @else
+                        <input {{ ($post->tags->contains($tag))?'checked':''}}
+                            name="tags[]" 
+                            type="checkbox" 
+                            class="form-check-input" 
+                            id="tag_{{ $tag->id }}" 
+                            value="{{ $tag->id }}"
+                            >     
+                            
+                    @endif
+                    
+                    <label class="form-check-label" for="{{ $tag->id }}">{{ $tag->name }}</label>      
+                </div>
+            @endforeach  
+            @error('tags')
+                <div class="alert alert-danger">
+                    {{ $message }}
+                </div>
+            @enderror 
+        </div> 
+
         <button type="submit" class="btn btn-primary mb-5">Update </button>
     </form>
 
